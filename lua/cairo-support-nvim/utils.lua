@@ -17,4 +17,12 @@ function utils.showMessage(message)
 	vim.api.nvim_win_set_option(win, "winhl", "Normal:MyHighlight")
 end
 
+function utils.splitString(stringToSplit)
+	local lines = {}
+	for script in stringToSplit:gmatch("[\r\n]+") do
+		table.insert(lines, script)
+	end
+	return lines
+end
+
 return utils

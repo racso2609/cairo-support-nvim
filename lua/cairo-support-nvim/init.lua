@@ -1,5 +1,7 @@
 print("cairo")
 local autocmd = vim.api.nvim_create_autocmd
+local utils = require("cairo-support-nvim.utils")
+
 local M = {}
 function M.setup()
 	autocmd("BufWritePost", {
@@ -19,7 +21,8 @@ function M.setup()
 			local actualContent = vim.api.nvim_buf_get_lines(0, 0, -1, false)
 
 			if data ~= actualContent then
-				vim.api.nvim_buf_set_lines(0, 0, -1, false, data)
+				local dataArr = utils.splitString(data)
+				vim.api.nvim_buf_set_lines(0, 0, -1, false, dataArr)
 				print("qlq")
 			end
 			-- vim.cmd("!cp " .. filePath .. " " .. filePath .. ".old")
@@ -28,7 +31,6 @@ function M.setup()
 		end,
 	})
 end
-
 print(vim.fn.expand("%:.:h:h"))
 
 return M
