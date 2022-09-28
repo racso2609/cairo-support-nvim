@@ -19,10 +19,21 @@ end
 
 function utils.splitString(stringToSplit)
 	local lines = {}
-	for script in stringToSplit:gmatch("[\r\n]+") do
+	for script in stringToSplit:gmatch("([^\n]*)\n?") do
 		table.insert(lines, script)
 	end
 	return lines
+end
+
+function utils.isEqArr(arr1, arr2)
+	for i = 1, #arr1 - 1 do
+		print(arr1[i], arr2[i])
+
+		if arr1[i] ~= arr2[i] then
+			return false
+		end
+	end
+	return true
 end
 
 return utils
