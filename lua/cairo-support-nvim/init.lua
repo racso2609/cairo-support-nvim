@@ -7,7 +7,7 @@ function M.setup()
 		callback = function()
 			local filePath = vim.fn.expand("%:p")
 
-			local handle = io.popen("!cairo-format " .. filePath)
+			local handle = io.popen("cairo-format " .. filePath)
 			if not handle then
 				return
 			end
