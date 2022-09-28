@@ -1,3 +1,3 @@
-func hola(a:felt) {
+func hola(a: felt) {
     return ();
 }

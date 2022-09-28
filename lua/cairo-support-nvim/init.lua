@@ -6,11 +6,23 @@ function M.setup()
 		pattern = "*.cairo",
 		callback = function()
 			local filePath = vim.fn.expand("%:p")
-			vim.cmd("!cp " .. filePath .. " " .. filePath .. ".old")
-			vim.cmd("!cairo-format " .. filePath .. ".old" .. " > " .. filePath)
-			vim.cmd("!rm " .. filePath .. ".old")
+
+			local handle = io.popen("!cairo-format " .. filePath)
+			if not handle then
+				return
+			end
+
+			local data = handle:read("*a")
+			handle:close()
+			print(data)
+
+			-- vim.cmd("!cp " .. filePath .. " " .. filePath .. ".old")
+			-- vim.cmd("!cairo-format " .. filePath .. ".old" .. " > " .. filePath)
+			-- vim.cmd("!rm " .. filePath .. ".old")
 		end,
 	})
 end
+
+print(vim.fn.expand("%:.:h:h"))
 
 return M
