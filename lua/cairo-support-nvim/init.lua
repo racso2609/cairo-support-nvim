@@ -15,7 +15,10 @@ function M.setup()
 			local data = handle:read("*a")
 			handle:close()
 			print(data)
-
+			local findFilePath = string.find(data, filePath)
+			if not findFilePath then
+				print("qlq")
+			end
 			-- vim.cmd("!cp " .. filePath .. " " .. filePath .. ".old")
 			-- vim.cmd("!cairo-format " .. filePath .. ".old" .. " > " .. filePath)
 			-- vim.cmd("!rm " .. filePath .. ".old")
