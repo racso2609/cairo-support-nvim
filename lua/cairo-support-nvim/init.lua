@@ -15,8 +15,10 @@ function M.setup()
 			local data = handle:read("*a")
 			handle:close()
 			print(data)
-			local findFilePath = string.find(data, filePath)
-			if not findFilePath then
+			-- local findFilePath = string.find(data, filePath)
+      local actualContent = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+			if data ~= actualContent then
 				print("qlq")
 			end
 			-- vim.cmd("!cp " .. filePath .. " " .. filePath .. ".old")
