@@ -27,8 +27,6 @@ end
 
 function utils.isEqArr(arr1, arr2)
 	for i = 1, #arr1 - 1 do
-		print(arr1[i], arr2[i])
-
 		if arr1[i] ~= arr2[i] then
 			return false
 		end
