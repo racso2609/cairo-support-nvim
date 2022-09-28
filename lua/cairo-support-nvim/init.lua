@@ -6,7 +6,7 @@ function M.setup()
 		pattern = "*.cairo",
 		callback = function()
 			local filePath = vim.fn.expand("%:p")
-			vim.cmd("cp " .. filePath .. " " .. filePath .. ".old")
+			vim.cmd("!cp " .. filePath .. " " .. filePath .. ".old")
 			vim.cmd("!cairo-format " .. filePath)
 		end,
 	})
