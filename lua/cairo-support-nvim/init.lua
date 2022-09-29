@@ -34,7 +34,18 @@ function Compile()
 		pattern = "*.cairo",
 		callback = function()
 			local filePath = vim.fn.expand("%:p")
-			print("compiling...")
+			local handle = io.popen("starknet-compile " .. filePath .. " | grep '[0-9]:*'")
+			if not handle then
+				return
+			end
+			local data = handle:read("*a")
+			handle:close()
+			print(data)
+
+			-- local findData = string.gmatch(data, "*")
+			-- print("compiling...")
+			-- print(findData)
+			-- print(data)
 		end,
 	})
 end
@@ -44,11 +55,11 @@ function M.setup(config)
 	if config.format then
 		Format()
 	end
-	if config.compile then
-		Compile()
-	end
+	-- if config.compile then
+	-- Compile()
+	-- end
 end
 
-print(vim.fn.expand("%:.:h:h"))
+-- Collect all key-value pairs from the given string into a table
 
 return M
