@@ -1,6 +1,8 @@
 # cairo-support-nvim
 
-get compile errors and format documents with cairo
+## Details
+
+get compile errors and format documents to cairo
 
 install using Packer
 ```
@@ -11,3 +13,6 @@ cairo.setup({
 	compile = true,
 })
 ```
+## Dependencies
+	1. starknet-devnet
+	2. cairo-lang
