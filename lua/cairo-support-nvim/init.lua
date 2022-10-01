@@ -1,8 +1,8 @@
+print("cairooooo")
 local autocmd = vim.api.nvim_create_autocmd
 local utils = require("cairo-support-nvim.utils")
 local FORMAT_COMMAND = "!cairo-format "
 local COMPILE_COMMAND = "!starknet-compile "
-local START_ENV_COMMAND = "!pyenv active "
 
 function HandleErr(errorPos, errorString)
   local bnr = 0
@@ -18,6 +18,16 @@ function HandleErr(errorPos, errorString)
 end
 
 function GetErrorInfo(data)
+  local existPyenv = string.find(data, "pyenv")
+  if existPyenv then
+    local result = {}
+    local errorPos = {}
+    table.insert(errorPos, 1)
+    table.insert(errorPos, 1)
+    table.insert(result, errorPos)
+    table.insert(result, "Active pyenv")
+    return result
+  end
   local errorNumberLine = string.match(data, "%d+[:]%d+")
   if not errorNumberLine then
     return
@@ -102,15 +112,6 @@ function M.setup(config)
   if config.compile then
     Compile()
   end
-
-  autocmd("FileType", {
-    pattern = "*.cairo",
-    callback = function()
-      print("cairo")
-
-      vim.api.nvim_exec(START_ENV_COMMAND..config.enviroment, false)
-    end,
-  })
 end
 
 -- Collect all key-value pairs from the given string into a table

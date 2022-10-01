@@ -11,8 +11,6 @@ use({ "racso2609/cairo-support-nvim" })
 cairo.setup({
 	format = true,
 	compile = true,
-  // pyenv enviroment name
-  enviroment = "cairo"
 })
 ```
 ## Dependencies
