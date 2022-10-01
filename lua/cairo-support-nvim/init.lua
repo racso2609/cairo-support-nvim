@@ -11,25 +11,26 @@ function HandleErr(errorPos, errorString)
 
   local opts = {
     id = 1,
-    virt_text = { { errorString, vim.api.nvim_get_hl_id_by_name("error") } },
+    virt_text = { { "*" .. errorString, vim.api.nvim_get_hl_id_by_name("error") } },
   }
 
   vim.api.nvim_buf_set_extmark(bnr, ns_id, line_num, -1, opts)
 end
 
 function GetErrorInfo(data)
-  local existPyenv = string.find(data, "pyenv")
-  if existPyenv then
-    local result = {}
-    local errorPos = {}
-    table.insert(errorPos, 1)
-    table.insert(errorPos, 1)
-    table.insert(result, errorPos)
-    table.insert(result, "Active pyenv")
-    return result
-  end
   local errorNumberLine = string.match(data, "%d+[:]%d+")
   if not errorNumberLine then
+    local existPyenv = string.find(data, "pyenv")
+    if existPyenv then
+      local result = {}
+      local errorPos = {}
+      table.insert(errorPos, 1)
+      table.insert(errorPos, 1)
+      table.insert(result, errorPos)
+      table.insert(result, "Active pyenv")
+      return result
+    end
+
     return
   end
   -- print("numberLine", errorNumberLine)
@@ -40,7 +41,7 @@ function GetErrorInfo(data)
   end
 
   local startIndex = string.find(data, "[.]%s")
-  local finishIndex = string.find(data, "[.]\n")
+  local finishIndex = string.find(data, "%p\n")
 
   if not startIndex or not finishIndex then
     return
@@ -95,6 +96,7 @@ function Compile()
       local filePath = vim.fn.expand("%:p")
       print("compiling...")
       local data = vim.api.nvim_exec(COMPILE_COMMAND .. filePath, true)
+      print(data)
       local errorData = GetErrorInfo(data)
       if errorData then
         HandleErr(errorData[1], errorData[2])
