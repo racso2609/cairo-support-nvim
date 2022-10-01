@@ -2,7 +2,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local utils = require("cairo-support-nvim.utils")
 local FORMAT_COMMAND = "!cairo-format "
 local COMPILE_COMMAND = "!starknet-compile "
-local START_ENV_COMMAND = "!pyenv active nexera_cairo"
+local START_ENV_COMMAND = "!pyenv active "
 
 function HandleErr(errorPos, errorString)
   local bnr = 0
@@ -108,7 +108,7 @@ function M.setup(config)
     callback = function()
       print("cairo")
 
-      vim.api.nvim_exec(START_ENV_COMMAND, false)
+      vim.api.nvim_exec(START_ENV_COMMAND..config.enviroment, false)
     end,
   })
 end
