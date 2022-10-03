@@ -33,6 +33,12 @@ function GetErrorInfo(data)
 
     return
   end
+
+  local isImportError = string.find(data, "following path")
+  if(isImportError) then
+    
+  return {}
+  end
   -- print("numberLine", errorNumberLine)
   local errorSplit = vim.split(errorNumberLine, ":")
   local errorPos = {}
